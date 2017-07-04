@@ -1,0 +1,20 @@
+{
+  "name": "boraso/module-toolkit",
+  "description": "Collection of usefull Magento2 utilities",
+  "require": {
+    "php": "7.0.2|7.0.4|~7.0.6|~7.1.0"
+  },
+  "type": "magento2-module",
+  "version": "0.1.0",
+  "license": [
+    "GPL-3.0+"
+  ]
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Boraso\\Toolkit\\": ""
+    }
+  }
+}
