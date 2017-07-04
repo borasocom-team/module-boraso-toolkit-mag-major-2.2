@@ -1,1 +1,2 @@
-# module-boraso-toolkit
+# Boraso Toolkit
+Collection of usefull Magento2 utilities
