@@ -2,7 +2,7 @@
 
 namespace Boraso\Toolkit\Model;
 
-use Boraso\Toolkit\Helper\Logger;
+use Boraso\Toolkit\Model\Logger;
 use Magento\Checkout\Exception;
 use Magento\Framework\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem\Io\Ftp;
