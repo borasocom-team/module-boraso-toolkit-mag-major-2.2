@@ -2,6 +2,7 @@
 
 namespace Boraso\Toolkit\Helper;
 
+use Braintree\Exception;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Psr\Log\LoggerInterface;
@@ -48,6 +49,19 @@ class Logger extends AbstractHelper
         }
 
         return false;
+    }
+
+    public function error($message){
+        $this->psrlogger->error(self::SEPARATOR);
+        $this->psrlogger->error($message);
+        $this->psrlogger->error(self::SEPARATOR);
+    }
+
+    public function errorTrace($message, Exception $exception){
+        $this->psrlogger->error(self::SEPARATOR);
+        $this->psrlogger->error($message);
+        $this->psrlogger->error($exception->getTrace());
+        $this->psrlogger->error(self::SEPARATOR);
     }
 
 }
