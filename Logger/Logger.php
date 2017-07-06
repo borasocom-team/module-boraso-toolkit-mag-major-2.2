@@ -6,6 +6,7 @@ use Monolog\Logger as MonoLog;
 
 class Logger extends MonoLog
 {
+    protected $logFileNamePrepend = '';
 
     const SEPARATOR = '-------------------------------------------------';
 
