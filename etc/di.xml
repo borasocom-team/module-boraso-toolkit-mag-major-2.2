@@ -5,11 +5,17 @@
             <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
         </arguments>
     </type>
+    <type name="Boraso\Toolkit\Logger\Handler\Debug">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
     <type name="Boraso\Toolkit\Logger\Logger">
         <arguments>
             <argument name="name" xsi:type="string">borasoSystemLog</argument>
             <argument name="handlers"  xsi:type="array">
                 <item name="system" xsi:type="object">Boraso\Toolkit\Logger\Handler\System</item>
+                <item name="debug" xsi:type="object">Boraso\Toolkit\Logger\Handler\Debug</item>
             </argument>
         </arguments>
     </type>

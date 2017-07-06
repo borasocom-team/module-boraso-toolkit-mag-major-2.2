@@ -15,7 +15,7 @@ class System extends Base
     /**
      * @var string
      */
-    protected $fileName = '/var/log/pippo.log';
+    protected $fileName = '/var/log/system.log';
 
     /**
      * @var int
