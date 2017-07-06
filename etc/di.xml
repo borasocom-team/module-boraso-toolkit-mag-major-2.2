@@ -1,21 +1,16 @@
 <?xml version="1.0"?>
-<!--
-/**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <virtualType name="borasoSystemLogger" type="Magento\Framework\Logger\Monolog">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Boraso\Toolkit\Logger\Handler\System">
         <arguments>
-            <argument name="handlers"  xsi:type="array">
-                <item name="system" xsi:type="object">Boraso\Toolkit\Model\Logger\Handler\System</item>
-            </argument>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
         </arguments>
-    </virtualType>
-    <type name="Boraso\Toolkit\Model\Logger">
+    </type>
+    <type name="Boraso\Toolkit\Logger\Logger">
         <arguments>
-            <argument name="logger" xsi:type="object">borasoSystemLogger</argument>
+            <argument name="name" xsi:type="string">borasoSystemLog</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Boraso\Toolkit\Logger\Handler\System</item>
+            </argument>
         </arguments>
     </type>
 </config>

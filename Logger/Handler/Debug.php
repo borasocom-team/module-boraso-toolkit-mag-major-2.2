@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Boraso\Toolkit\Model\Logger\Handler;
+namespace Boraso\Toolkit\Logger\Handler;
 
 use Monolog\Logger;
 use Magento\Framework\Logger\Handler\Base;
@@ -14,7 +14,7 @@ class Debug extends Base
     /**
      * @var string
      */
-    protected $fileName = '/var/log/debug.log';
+    protected $fileName = '/var/log/debugpippo.log';
 
     /**
      * @var int

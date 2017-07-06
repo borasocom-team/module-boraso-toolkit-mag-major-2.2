@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Boraso\Toolkit\Model\Logger\Handler;
+namespace Boraso\Toolkit\Logger\Handler;
 
 use Monolog\Logger;
 use Magento\Framework\Logger\Handler\Base;
