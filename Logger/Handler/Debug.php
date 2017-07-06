@@ -14,7 +14,7 @@ class Debug extends Base
     /**
      * @var string
      */
-    protected $fileName = '/var/log/ppippidebug.log';
+    protected $fileName = '/var/log/debug.log';
 
     /**
      * @var int
