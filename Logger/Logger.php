@@ -25,7 +25,6 @@ class Logger extends MonoLog
     {
         parent::debug(self::SEPARATOR, $context);
         parent::debug($message, $context);
-        parent::debug(print_r($this->handlers,true), $context);
         parent::debug(self::SEPARATOR, $context);
     }
 
