@@ -23,6 +23,7 @@ class Exception extends Base
 
     public function addPrependFileName($prependString){
         $this->fileName = '/var/log/' . $prependString . 'exception.log';
+        $this->url = BP . $this->fileName;
     }
 
     public function getLogFileName(){

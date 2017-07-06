@@ -14,7 +14,7 @@ class Debug extends Base
     /**
      * @var string
      */
-    protected $fileName = '/var/log/debug.log';
+    protected $fileName = '/var/log/ppippidebug.log';
 
     /**
      * @var int
@@ -23,6 +23,7 @@ class Debug extends Base
 
     public function addPrependFileName($prependString){
         $this->fileName = '/var/log/' . $prependString . 'debug.log';
+        $this->url = BP . $this->fileName;
     }
 
     public function getLogFileName(){
