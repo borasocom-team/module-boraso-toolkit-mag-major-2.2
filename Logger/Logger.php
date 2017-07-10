@@ -6,9 +6,12 @@ use Monolog\Logger as MonoLog;
 
 class Logger extends MonoLog
 {
+
     protected $logFileNamePrepend = '';
 
     const SEPARATOR = '-------------------------------------------------';
+    const SEPARATOR_START = '---------->START: ';
+    const SEPARATOR_STOP = '---------->STOP: ';
 
     public function __construct($name, $handlers = array(), $processors = array())
     {
@@ -17,9 +20,7 @@ class Logger extends MonoLog
 
     public function info($message, array $context = array())
     {
-        parent::info(self::SEPARATOR, $context);
         parent::info($message, $context);
-        parent::info(self::SEPARATOR, $context);
     }
 
     public function debug($message, array $context = array())
@@ -35,9 +36,19 @@ class Logger extends MonoLog
             $this->logFileNamePrepend = $prependString . '_';
         }
 
-        foreach ($this->handlers as $handler){
+        foreach ($this->handlers as $handler) {
             $handler->addPrependFileName($this->logFileNamePrepend);
         }
+    }
+
+    public function start($message, array $context = array())
+    {
+        parent::info(self::SEPARATOR_START . $message, $context);
+    }
+
+    public function stop($message, array $context = array())
+    {
+        parent::info(self::SEPARATOR_STOP . $message, $context);
     }
 
 }
