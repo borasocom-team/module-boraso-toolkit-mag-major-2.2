@@ -2,6 +2,7 @@
 
 namespace Boraso\Toolkit\Logger;
 
+use Boraso\Toolkit\Logger\Handler\Exception;
 use Monolog\Logger as MonoLog;
 
 class Logger extends MonoLog
@@ -23,11 +24,31 @@ class Logger extends MonoLog
         parent::info($message, $context);
     }
 
-    public function debug($message, array $context = array())
+    public function debug($messageOrArrayOrObject, array $context = array())
     {
         parent::debug(self::SEPARATOR, $context);
-        parent::debug($message, $context);
+        if(is_array($messageOrArrayOrObject)){
+            parent::debug(print_r($messageOrArrayOrObject,true), $context);
+        }
+        else if(method_exists($messageOrArrayOrObject,'getData')){
+            parent::debug(print_r($messageOrArrayOrObject->getData(),true), $context);
+        }
+        else{
+            parent::debug($messageOrArrayOrObject, $context);
+        }
         parent::debug(self::SEPARATOR, $context);
+    }
+
+    public function error($message, array $context = array()){
+        parent::error(self::SEPARATOR);
+        parent::error($message);
+        parent::error(self::SEPARATOR);
+    }
+
+    public function logTrace(Exception $exception){
+        parent::debug(self::SEPARATOR);
+        parent::debug($exception->getTraceAsString());
+        parent::debug(self::SEPARATOR);
     }
 
     public function setLogFileNamePrepend($prependString)
