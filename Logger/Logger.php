@@ -45,12 +45,6 @@ class Logger extends MonoLog
         parent::error(self::SEPARATOR);
     }
 
-    public function logTrace(Exception $exception){
-        parent::debug(self::SEPARATOR);
-        parent::debug($exception->getTraceAsString());
-        parent::debug(self::SEPARATOR);
-    }
-
     public function setLogFileNamePrepend($prependString)
     {
         if ( ! empty($prependString)) {
