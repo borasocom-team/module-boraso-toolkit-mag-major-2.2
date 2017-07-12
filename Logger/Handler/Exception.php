@@ -9,6 +9,11 @@ namespace Boraso\Toolkit\Logger\Handler;
 use Monolog\Logger;
 use Magento\Framework\Logger\Handler\Base;
 
+/**
+ * Class Exception
+ *
+ * @package Boraso\Toolkit\Logger\Handler
+ */
 class Exception extends Base
 {
     /**
@@ -21,11 +26,17 @@ class Exception extends Base
      */
     protected $loggerType = Logger::INFO;
 
+    /**
+     * @param $prependString
+     */
     public function addPrependFileName($prependString){
         $this->fileName = '/var/log/' . $prependString . 'exception.log';
         $this->url = BP . $this->fileName;
     }
 
+    /**
+     * @return string
+     */
     public function getLogFileName(){
         return $this->fileName;
     }

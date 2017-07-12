@@ -6,6 +6,11 @@ use Boraso\Toolkit\Logger\Handler\Exception;
 use Monolog\Logger as MonoLog;
 use Boraso\Toolkit\Helper\Data;
 
+/**
+ * Class Logger
+ *
+ * @package Boraso\Toolkit\Logger
+ */
 class Logger extends MonoLog
 {
 
@@ -16,6 +21,14 @@ class Logger extends MonoLog
     const SEPARATOR_START = '---------->START: ';
     const SEPARATOR_STOP = '---------->STOP: ';
 
+    /**
+     * Logger constructor.
+     *
+     * @param string $name
+     * @param array  $handlers
+     * @param Data   $helper
+     * @param array  $processors
+     */
     public function __construct($name, $handlers = array(), Data $helper, $processors = array())
     {
         parent::__construct($name, $handlers, $processors);
@@ -23,11 +36,20 @@ class Logger extends MonoLog
         $this->helper = $helper;
     }
 
+    /**
+     * @param string $message
+     * @param array  $context
+     */
     public function info($message, array $context = array())
     {
         parent::info($message, $context);
     }
 
+    /**
+     * @param string $messageOrArrayOrObject
+     * @param array  $context
+     * @param bool   $forceLog
+     */
     public function debug($messageOrArrayOrObject, array $context = array(), $forceLog = false)
     {
         if($this->helper->getSettingsDebugEnable() || $forceLog){
@@ -45,12 +67,19 @@ class Logger extends MonoLog
         }
     }
 
+    /**
+     * @param string $message
+     * @param array  $context
+     */
     public function error($message, array $context = array()){
         parent::error(self::SEPARATOR);
         parent::error($message);
         parent::error(self::SEPARATOR);
     }
 
+    /**
+     * @param $prependString
+     */
     public function setLogFileNamePrepend($prependString)
     {
         if ( ! empty($prependString)) {
@@ -62,11 +91,19 @@ class Logger extends MonoLog
         }
     }
 
+    /**
+     * @param       $message
+     * @param array $context
+     */
     public function start($message, array $context = array())
     {
         parent::info(self::SEPARATOR_START . $message, $context);
     }
 
+    /**
+     * @param       $message
+     * @param array $context
+     */
     public function stop($message, array $context = array())
     {
         parent::info(self::SEPARATOR_STOP . $message, $context);

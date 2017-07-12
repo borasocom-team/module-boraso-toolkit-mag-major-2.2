@@ -9,6 +9,11 @@ namespace Boraso\Toolkit\Logger\Handler;
 use Monolog\Logger;
 use Magento\Framework\Logger\Handler\Base;
 
+/**
+ * Class Debug
+ *
+ * @package Boraso\Toolkit\Logger\Handler
+ */
 class Debug extends Base
 {
     /**
@@ -21,11 +26,17 @@ class Debug extends Base
      */
     protected $loggerType = Logger::DEBUG;
 
+    /**
+     * @param $prependString
+     */
     public function addPrependFileName($prependString){
         $this->fileName = '/var/log/' . $prependString . 'debug.log';
         $this->url = BP . $this->fileName;
     }
 
+    /**
+     * @return string
+     */
     public function getLogFileName(){
         return $this->fileName;
     }

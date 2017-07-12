@@ -10,6 +10,11 @@ use Magento\Framework\Filesystem\DriverInterface;
 use Monolog\Logger;
 use Magento\Framework\Logger\Handler\Base;
 
+/**
+ * Class System
+ *
+ * @package Boraso\Toolkit\Logger\Handler
+ */
 class System extends Base
 {
     /**
@@ -59,11 +64,17 @@ class System extends Base
         }
     }
 
+    /**
+     * @param $prependString
+     */
     public function addPrependFileName($prependString){
         $this->fileName = '/var/log/' . $prependString . 'system.log';
         $this->url = BP . $this->fileName;
     }
 
+    /**
+     * @return string
+     */
     public function getLogFileName(){
         return $this->fileName;
     }

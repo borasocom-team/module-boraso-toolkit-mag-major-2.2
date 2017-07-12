@@ -6,18 +6,34 @@ use Boraso\Toolkit\Logger\Logger;
 use Magento\Checkout\Exception;
 use Magento\Framework\Filesystem\Io\Ftp;
 
+/**
+ * Class FtpHandler
+ *
+ * @package Boraso\Toolkit\Model
+ */
 class FtpHandler
 {
 
     protected $ftpHandler;
     protected $logger;
 
+    /**
+     * FtpHandler constructor.
+     *
+     * @param Ftp    $ftpHandler
+     * @param Logger $logger
+     */
     public function __construct(Ftp $ftpHandler, Logger $logger)
     {
         $this->ftpHandler = $ftpHandler;
         $this->logger     = $logger;
     }
 
+    /**
+     * @param $connectionParameters
+     *
+     * @return bool
+     */
     protected function verifyConnectionParameters($connectionParameters)
     {
         if (empty($connectionParameters) || ! is_array($connectionParameters)) {
@@ -54,6 +70,13 @@ class FtpHandler
         return true;
     }
 
+    /**
+     * @param $connectionParameters
+     * @param $fileLocalPath
+     * @param $fileRemotePath
+     *
+     * @return bool
+     */
     public function upload($connectionParameters, $fileLocalPath, $fileRemotePath)
     {
         if ( ! $this->verifyConnectionParameters($connectionParameters)) {
