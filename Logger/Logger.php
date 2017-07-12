@@ -4,19 +4,23 @@ namespace Boraso\Toolkit\Logger;
 
 use Boraso\Toolkit\Logger\Handler\Exception;
 use Monolog\Logger as MonoLog;
+use Boraso\Toolkit\Helper\Data;
 
 class Logger extends MonoLog
 {
 
     protected $logFileNamePrepend = '';
+    protected $helper;
 
     const SEPARATOR = '-------------------------------------------------';
     const SEPARATOR_START = '---------->START: ';
     const SEPARATOR_STOP = '---------->STOP: ';
 
-    public function __construct($name, $handlers = array(), $processors = array())
+    public function __construct($name, $handlers = array(), Data $helper, $processors = array())
     {
         parent::__construct($name, $handlers, $processors);
+
+        $this->helper = $helper;
     }
 
     public function info($message, array $context = array())
@@ -24,19 +28,21 @@ class Logger extends MonoLog
         parent::info($message, $context);
     }
 
-    public function debug($messageOrArrayOrObject, array $context = array())
+    public function debug($messageOrArrayOrObject, array $context = array(), $forceLog = false)
     {
-        parent::debug(self::SEPARATOR, $context);
-        if(is_array($messageOrArrayOrObject)){
-            parent::debug(print_r($messageOrArrayOrObject,true), $context);
+        if($this->helper->getSettingsDebugEnable() || $forceLog){
+            parent::debug(self::SEPARATOR, $context);
+            if(is_array($messageOrArrayOrObject)){
+                parent::debug(print_r($messageOrArrayOrObject,true), $context);
+            }
+            else if(method_exists($messageOrArrayOrObject,'getData')){
+                parent::debug(print_r($messageOrArrayOrObject->getData(),true), $context);
+            }
+            else{
+                parent::debug($messageOrArrayOrObject, $context);
+            }
+            parent::debug(self::SEPARATOR, $context);
         }
-        else if(method_exists($messageOrArrayOrObject,'getData')){
-            parent::debug(print_r($messageOrArrayOrObject->getData(),true), $context);
-        }
-        else{
-            parent::debug($messageOrArrayOrObject, $context);
-        }
-        parent::debug(self::SEPARATOR, $context);
     }
 
     public function error($message, array $context = array()){

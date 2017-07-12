@@ -18,6 +18,7 @@
                 <item name="system" xsi:type="object">Boraso\Toolkit\Logger\Handler\System</item>
                 <item name="debug" xsi:type="object">Boraso\Toolkit\Logger\Handler\Debug</item>
             </argument>
+            <argument name="helper" xsi:type="object">Boraso\Toolkit\Helper\Data</argument>
         </arguments>
     </type>
 </config>
