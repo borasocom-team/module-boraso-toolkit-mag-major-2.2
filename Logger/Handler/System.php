@@ -8,7 +8,7 @@ namespace Boraso\Toolkit\Logger\Handler;
 
 use Magento\Framework\Filesystem\DriverInterface;
 use Monolog\Logger;
-use Magento\Framework\Logger\Handler\Base;
+use Boraso\Toolkit\Logger\Handler\Base;
 
 /**
  * Class System

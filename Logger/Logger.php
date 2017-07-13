@@ -109,4 +109,12 @@ class Logger extends MonoLog
         parent::info(self::SEPARATOR_STOP . $message, $context);
     }
 
+    public function debugObjectType($object, array $context = array(), $forceLog = false){
+        if($this->helper->getSettingsDebugEnable() || $forceLog){
+            parent::debug(self::SEPARATOR, $context);
+            parent::debug(get_class($object));
+            parent::debug(self::SEPARATOR, $context);
+        }
+    }
+
 }
