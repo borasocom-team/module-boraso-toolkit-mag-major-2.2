@@ -57,9 +57,6 @@ class Logger extends MonoLog
             if(is_array($messageOrArrayOrObject)){
                 parent::debug(print_r($messageOrArrayOrObject,true), $context);
             }
-            else if(method_exists($messageOrArrayOrObject,'getData')){
-                parent::debug(print_r($messageOrArrayOrObject->getData(),true), $context);
-            }
             else{
                 parent::debug($messageOrArrayOrObject, $context);
             }
