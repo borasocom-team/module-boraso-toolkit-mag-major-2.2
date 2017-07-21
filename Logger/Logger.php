@@ -50,12 +50,19 @@ class Logger extends MonoLog
      * @param array  $context
      * @param bool   $forceLog
      */
-    public function debug($messageOrArrayOrObject, array $context = array(), $forceLog = false)
+    public function debug($messageOrArrayOrObject, array $context = array(), $forceLog = false, $multipleMessages = false)
     {
         if($this->helper->getSettingsDebugEnable() || $forceLog){
             parent::debug(self::SEPARATOR, $context);
             if(is_array($messageOrArrayOrObject)){
-                parent::debug(print_r($messageOrArrayOrObject,true), $context);
+                if($multipleMessages){
+                    foreach ($messageOrArrayOrObject as $message){
+                        parent::debug($message, $context);
+                    }
+                }
+                else{
+                    parent::debug(print_r($messageOrArrayOrObject,true), $context);
+                }
             }
             else{
                 parent::debug($messageOrArrayOrObject, $context);
