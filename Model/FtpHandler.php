@@ -90,21 +90,26 @@ class FtpHandler
         try {
             $openedFtpConnection = $this->ftpHandler->open($connectionParameters);
         } catch (\Exception $exception) {
-            $this->logger->error('Can\'t open serever connection');
+            $this->logger->error('Can\'t open server connection');
             $this->logger->debug($exception->getMessage());
         }
 
         if ($openedFtpConnection) {
             try {
                 $fileContent = file_get_contents($fileLocalPath);
-                $this->ftpHandler->write($fileRemotePath, $fileContent);
+                $writeResult = $this->ftpHandler->write($fileRemotePath, $fileContent);
+
+                $this->logger->debug('FTP write result: ' . $writeResult);
+
                 $this->ftpHandler->close();
+
+                return true;
             } catch (\Exception $exception) {
                 $this->logger->error('Can\'t upload file');
                 $this->logger->debug($exception->getMessage());
             }
         }
 
-        return true;
+        return false;
     }
 }
