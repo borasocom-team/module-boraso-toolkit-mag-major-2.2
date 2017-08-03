@@ -30,14 +30,16 @@ class FileHandler extends File
      *
      * @return bool|string
      */
-    public function archive($fileFullPath)
+    public function archive($fileFullPath, $archiveDirectory = false)
     {
         if (empty($fileFullPath) || ! is_file($fileFullPath)) {
             return false;
         }
 
         $filePathParts        = pathinfo($fileFullPath);
-        $archiveDirectory     = $filePathParts['dirname'] . '/' . 'archive_' . $filePathParts['filename'];
+        if(!$archiveDirectory){
+            $archiveDirectory     = $filePathParts['dirname'] . '/' . 'archive_' . $filePathParts['filename'];
+        }
         $archivedFileFullPath = $archiveDirectory . '/' .$this->now->format('Ymd_') . $filePathParts['basename'];
         if ( ! is_dir($archiveDirectory)) {
             $this->mkdir($archiveDirectory, 0775);

@@ -17,6 +17,7 @@
                 <item name="error" xsi:type="object">Boraso\Toolkit\Logger\Handler\Error</item>
                 <item name="system" xsi:type="object">Boraso\Toolkit\Logger\Handler\System</item>
                 <item name="debug" xsi:type="object">Boraso\Toolkit\Logger\Handler\Debug</item>
+                <item name="exception" xsi:type="object">Boraso\Toolkit\Logger\Handler\Exception</item>
             </argument>
             <argument name="helper" xsi:type="object">Boraso\Toolkit\Helper\Data</argument>
         </arguments>

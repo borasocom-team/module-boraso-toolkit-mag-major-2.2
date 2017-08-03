@@ -70,6 +70,7 @@ class System extends Base
     public function addPrependFileName($prependString){
         $this->fileName = '/var/log/' . $prependString . 'system.log';
         $this->url = BP . $this->fileName;
+        $this->exceptionHandler->addPrependFileName($prependString);
     }
 
     /**
