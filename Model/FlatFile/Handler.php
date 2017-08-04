@@ -6,6 +6,11 @@ use Boraso\Toolkit\Logger\Logger;
 use Braintree\Exception;
 use Magento\Framework\Filesystem\Driver\File;
 
+/**
+ * Class Handler
+ *
+ * @package Boraso\Toolkit\Model\FlatFile
+ */
 class Handler
 {
 
@@ -18,12 +23,23 @@ class Handler
     protected $elementsNumber;
     protected $logger;
 
+    /**
+     * Handler constructor.
+     *
+     * @param File   $file
+     * @param Logger $logger
+     */
     public function __construct(File $file, Logger $logger)
     {
         $this->file   = $file;
         $this->logger = $logger;
     }
 
+    /**
+     * @param bool $write
+     *
+     * @return bool
+     */
     protected function checkConsistency($write = false)
     {
 
@@ -54,6 +70,12 @@ class Handler
         return true;
     }
 
+    /**
+     * @param string $path
+     * @param array  $elements
+     *
+     * @return bool|int
+     */
     public function init(string $path, array $elements)
     {
         foreach ($elements as $element) {
@@ -136,6 +158,9 @@ class Handler
         return $data;
     }
 
+    /**
+     * @return array|bool
+     */
     public function readLines()
     {
         if ( ! $this->checkConsistency()) {
@@ -233,6 +258,11 @@ class Handler
         return $data;
     }
 
+    /**
+     * @param $data
+     *
+     * @return bool|int
+     */
     public function writeLines($data)
     {
         if ( ! $this->checkConsistency(true)) {
