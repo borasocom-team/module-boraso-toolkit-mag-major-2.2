@@ -37,15 +37,21 @@ class Handler
 
     /**
      * @param bool $write
-     *
+     * @param bool $returnReadLines
      * @return bool
      */
-    protected function checkConsistency($write = false)
+    protected function checkConsistency($write = false, $returnReadLines = false)
     {
-
-        if (empty($this->structure) || empty($this->path)) {
-            return false;
+        if (!$returnReadLines) {
+            if (empty($this->structure) || empty($this->path)) {
+                return false;
+            }
+        } else {
+            if(empty($this->path)) {
+                return false;
+            }
         }
+
 
         if ($this->file->isFile($this->path)) {
             if ($write) {
@@ -68,6 +74,27 @@ class Handler
         }
 
         return true;
+    }
+
+    /**
+     * @return $this
+     */
+    public function resetStructure()
+    {
+        $this->structure = [];
+
+        return $this;
+    }
+
+    /**
+     * @param string $path
+     * @return $this
+     */
+    public function setPath(string $path)
+    {
+        $this->path = $path;
+
+        return $this;
     }
 
     /**
@@ -108,9 +135,9 @@ class Handler
      *
      * @return array|bool
      */
-    public function readLine($resource = false)
+    public function readLine($resource = false, $returnReadLines = false)
     {
-        if ( ! $this->checkConsistency()) {
+        if ( ! $this->checkConsistency(false, $returnReadLines)) {
             return false;
         }
 
@@ -142,16 +169,21 @@ class Handler
 
         $this->linePointer++;
 
-        $readedLinePortion = 0;
-        $data              = array();
-        foreach ($this->structure as $item) {
-            $data[$item['name']] = substr($dataLine, $readedLinePortion, $item['length']);
-            $readedLinePortion   += $item['length'];
+        if (!$returnReadLines) {
+            $readedLinePortion = 0;
+            $data              = array();
+            foreach ($this->structure as $item) {
+                $data[$item['name']] = substr($dataLine, $readedLinePortion, $item['length']);
+                $readedLinePortion   += $item['length'];
+            }
+
+            if (isset($close) && $close) {
+                $this->file->fileClose($resource);
+            }
+        } else {
+            $data = $dataLine;
         }
 
-        if (isset($close) && $close) {
-            $this->file->fileClose($resource);
-        }
 
         $this->logger->debug($data);
 
@@ -159,11 +191,12 @@ class Handler
     }
 
     /**
+     * @param bool $returnReadLines
      * @return array|bool
      */
-    public function readLines()
+    public function readLines($returnReadLines = false)
     {
-        if ( ! $this->checkConsistency()) {
+        if ( ! $this->checkConsistency(false, $returnReadLines)) {
             return false;
         }
 
@@ -178,8 +211,8 @@ class Handler
 
         $dataLine = true;
         while ($dataLine != false) {
-            $dataLine = $this->readLine($resource);
-            if (is_array($dataLine)) {
+            $dataLine = $this->readLine($resource, $returnReadLines);
+            if (is_array($dataLine) || $returnReadLines) {
                 array_push($data, $dataLine);
             }
         }
@@ -228,9 +261,13 @@ class Handler
                 $this->logger->debug('length mismatch for item ' . $index + 1 . ' at code ' . $item['name']);
                 return false;
             } else if ($item['length'] > $dataItemLength) {
-                $gap = $item['length'] - $dataItemLength;
-                for ($i = 0; $i < $gap; $i++) {
-                    $data[$index] .= $item['fillWith'];
+                if ($item['fillWith'] == '0') {
+                    $data[$index] = str_pad($data[$index], $item['length'], $item['fillWith'],STR_PAD_LEFT);
+                } else {
+                    $gap = $item['length'] - $dataItemLength;
+                    for ($i = 0; $i < $gap; $i++) {
+                        $data[$index] .= $item['fillWith'];
+                    }
                 }
             }
         }

@@ -46,9 +46,10 @@ class Logger extends MonoLog
     }
 
     /**
-     * @param string $messageOrArrayOrObject
-     * @param array  $context
-     * @param bool   $forceLog
+     * @param string|array $messageOrArrayOrObject
+     * @param array $context
+     * @param bool $forceLog
+     * @param bool $multipleMessages
      */
     public function debug($messageOrArrayOrObject, array $context = array(), $forceLog = false, $multipleMessages = false)
     {

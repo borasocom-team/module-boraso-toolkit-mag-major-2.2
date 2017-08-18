@@ -79,20 +79,7 @@ class FtpHandler
      */
     public function upload($connectionParameters, $fileLocalPath, $fileRemotePath)
     {
-        if ( ! $this->verifyConnectionParameters($connectionParameters)) {
-            $this->logger->error('FTP upload failed');
-
-            return false;
-        }
-
-        $openedFtpConnection = false;
-
-        try {
-            $openedFtpConnection = $this->ftpHandler->open($connectionParameters);
-        } catch (\Exception $exception) {
-            $this->logger->error('Can\'t open server connection');
-            $this->logger->debug($exception->getMessage());
-        }
+        $openedFtpConnection = $this->openFtpConnection($connectionParameters);
 
         if ($openedFtpConnection) {
             try {
@@ -111,5 +98,93 @@ class FtpHandler
         }
 
         return false;
+    }
+
+    public function downloadFile($connectionParameters, $fileRemotePath, $fileLocalPath)
+    {
+        $openedFtpConnection = $this->openFtpConnection($connectionParameters);
+
+        if ($openedFtpConnection) {
+            try {
+                $fileRead = ($this->ftpHandler->read($fileRemotePath, $fileLocalPath) === false) ? false : true;
+                $this->logger->debug('FTP read: ' . $fileRemotePath . ' result: ' . $fileRead);
+
+                $this->ftpHandler->close();
+
+                return $fileRead;
+            } catch (\Exception $exception) {
+                $this->logger->error('Can\'t upload file');
+                $this->logger->debug($exception->getMessage());
+            }
+        }
+
+        return false;
+    }
+
+    public function downloadFilesFromDir($connectionParameters, $remotePath, $localPath, $startWith = '', $rename = false)
+    {
+        $openedFtpConnection = $this->openFtpConnection($connectionParameters);
+
+        if ($openedFtpConnection) {
+            $now = new \DateTime();
+            try {
+                $this->ftpHandler->cd($remotePath);
+                $files = $this->ftpHandler->ls();
+                foreach ($files as $file) {
+                    $filename = $file['text'];
+                    if (!empty($startWith)) {
+                        $prefix = substr($filename, 0, strlen($startWith));
+                        if ($prefix != $startWith) {
+                            continue;
+                        }
+                    }
+                    $fileLocalPath = $localPath . $filename;
+                    if ($this->ftpHandler->read($filename, $fileLocalPath) == false) {
+                        $this->logger->debug('FTP read: ' . $filename . ' failed!!!');
+                        return false;
+                    } else {
+                        $this->logger->debug('FTP read: ' . $filename);
+                        if ($rename) {
+                            $newFileName = $now->format('Ymd_') . $filename;
+                            if ($this->ftpHandler->mv($filename, $newFileName) == false) {
+                                $this->logger->debug('FTP rename: ' . $filename . ' failed!!!');
+                                return false;
+                            } else {
+                                $this->logger->debug('FTP file: ' . $filename . ' renamed to ' . $newFileName);
+                            }
+                        }
+                    }
+                }
+
+                $this->ftpHandler->close();
+
+                return true;
+            } catch (\Exception $exception) {
+                $this->logger->error('Can\'t upload file');
+                $this->logger->debug($exception->getMessage());
+                return false;
+            }
+        }
+    }
+
+    /**
+     * @param $connectionParameters
+     * @return bool|true
+     */
+    protected function openFtpConnection($connectionParameters)
+    {
+        if ( ! $this->verifyConnectionParameters($connectionParameters)) {
+            $this->logger->error('FTP upload failed');
+
+            return false;
+        }
+
+        try {
+            return $this->ftpHandler->open($connectionParameters);
+        } catch (\Exception $exception) {
+            $this->logger->error('Can\'t open server connection');
+            $this->logger->debug($exception->getMessage());
+            return false;
+        }
     }
 }
