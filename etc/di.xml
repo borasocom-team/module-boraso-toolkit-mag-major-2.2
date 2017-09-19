@@ -22,4 +22,5 @@
             <argument name="helper" xsi:type="object">Boraso\Toolkit\Helper\Data</argument>
         </arguments>
     </type>
+    <preference for="Magento\UrlRewrite\Controller\Router" type="Boraso\Toolkit\Controller\Magento\UrlRewrite\RouterFix" />
 </config>
