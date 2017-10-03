@@ -132,6 +132,9 @@ class FtpHandler
                 $files = $this->ftpHandler->ls();
                 foreach ($files as $file) {
                     $filename = $file['text'];
+                    if (substr($filename, 0, 2) == './') {
+                        $filename = substr($filename, 2, strlen($filename));
+                    }
                     if (!empty($startWith)) {
                         $prefix = substr($filename, 0, strlen($startWith));
                         if ($prefix != $startWith) {
