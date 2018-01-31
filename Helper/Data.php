@@ -23,4 +23,8 @@ class Data extends AbstractHelper
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
     }
+
+    public function getCssClassFromString(String $value){
+        return str_replace(' ','-', preg_replace("/[^A-Za-z0-9 ]/", '', strtolower($value)));
+    }
 }
