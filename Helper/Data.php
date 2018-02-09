@@ -12,6 +12,7 @@ use Magento\Framework\App\Helper\AbstractHelper;
 class Data extends AbstractHelper
 {
     const SETTINGS_DEBUG_ENABLE = 'toolkit_settings/debug/enable';
+    const ENABLE_SEND_EMAIL = 'newsletter/subscription/enable_send_email';
 
     /**
      * @return mixed
@@ -26,5 +27,16 @@ class Data extends AbstractHelper
 
     public function getCssClassFromString(String $value){
         return str_replace(' ','-', preg_replace("/[^A-Za-z0-9 ]/", '', strtolower($value)));
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getEnableSendEmail()
+    {
+        return $this->scopeConfig->getValue(
+            self::ENABLE_SEND_EMAIL,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
     }
 }
