@@ -26,4 +26,11 @@
     <type name="Magento\Newsletter\Model\Subscriber">
         <plugin name="subscriberemailplugin" type="Boraso\Toolkit\Plugin\Newsletter\SubscriberPlugin" disabled="false" sortOrder="10"/>
     </type>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="url_rewrite_generate" xsi:type="object">Boraso\Toolkit\Console\Command\UrlRewriteGenerate</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
