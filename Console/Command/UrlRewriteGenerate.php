@@ -2,6 +2,7 @@
 
 namespace Boraso\Toolkit\Console\Command;
 
+use Boraso\Toolkit\Model\Abstracts\PathItems;
 use Magento\Store\Model\StoreRepository;
 use Magento\UrlRewrite\Model\UrlRewriteFactory;
 use Symfony\Component\Console\Command\Command;
@@ -13,20 +14,17 @@ class UrlRewriteGenerate extends Command
 
     protected $storeRepository;
     protected $urlRewriteFactory;
-    protected $targetPaths;
-    protected $requestPaths;
+    protected $paths;
 
     public function __construct(
         $name = null,
         StoreRepository $storeRepository,
         UrlRewriteFactory $urlRewriteFactory,
-        array $targetPaths = null,
-        array $requestPaths = null
+        PathItems $paths
     ) {
         $this->storeRepository   = $storeRepository;
         $this->urlRewriteFactory = $urlRewriteFactory;
-        $this->requestPaths      = $requestPaths;
-        $this->targetPaths       = $targetPaths;
+        $this->paths      = $paths;
 
         parent::__construct($name);
     }
@@ -39,6 +37,36 @@ class UrlRewriteGenerate extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('START generiting rewrite rules');
+
+        $output->writeln('paths: ');
+        $output->writeln(print_r($this->paths, true));
+
+        $stores = $this->storeRepository->getList();
+        if (isset($this->targetPaths) && isset($this->requestPaths)) {
+            foreach ($stores as $store) {
+                /** @var  $path \Boraso\Toolkit\Model\Abstracts\PathItem */
+                foreach ($this->paths->getPaths() as $key => $path) {
+                    $urlRewriteModel      = $this->urlRewriteFactory->create();
+                    $urlRewriteCollection = $urlRewriteModel->getResourceCollection()
+                                                            ->addFieldToFilter('request_path', strtolower(__($path->getTarget())))
+                                                            ->addFieldToFilter('store_id', $store->getId());
+                    if ($urlRewriteCollection->count() == 0) {
+                        $urlRewriteModel->setStoreId($store->getId());
+                        $urlRewriteModel->setIsSystem(0);
+                        $urlRewriteModel->setIdPath(rand(1, 100000));
+                        $urlRewriteModel->setTargetPath($path->getRequest());
+                        $urlRewriteModel->setRequestPath(strtolower(__($path->getTarget())));
+                        $urlRewriteModel->save();
+
+                        $output->writeln('item: ' . $key);
+                        $output->writeln('target path: ' . $path->getTarget());
+                        $output->writeln('request path: ' . $path->getRequest());
+                    }
+                }
+            }
+        }
+        
+        
         $output->writeln('target paths: ');
         $output->writeln(print_r($this->targetPaths, true));
         $output->writeln('request paths: ');
