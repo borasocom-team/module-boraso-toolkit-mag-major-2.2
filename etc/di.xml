@@ -33,4 +33,8 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Magento\Framework\View\Page\Config">
+        <plugin name="removeMetaKeywords" type="Boraso\Toolkit\Plugin\PageConfig\RemoveMetaKeywordsPlugin" sortOrder="9999"/>
+    </type>
 </config>
