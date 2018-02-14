@@ -17,7 +17,6 @@ class UrlRewriteGenerate extends Command
     protected $paths;
 
     public function __construct(
-        $name = null,
         StoreRepository $storeRepository,
         UrlRewriteFactory $urlRewriteFactory,
         PathItems $paths
@@ -28,7 +27,7 @@ class UrlRewriteGenerate extends Command
 
         $this->paths->addItems(array());
 
-        parent::__construct($name);
+        parent::__construct(null);
     }
 
     protected function configure()
