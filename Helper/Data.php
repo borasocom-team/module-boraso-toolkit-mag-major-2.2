@@ -25,6 +25,11 @@ class Data extends AbstractHelper
         );
     }
 
+    /**
+     * @param String $value
+     *
+     * @return mixed
+     */
     public function getCssClassFromString(String $value){
         return str_replace(' ','-', preg_replace("/[^A-Za-z0-9 ]/", '', strtolower($value)));
     }
