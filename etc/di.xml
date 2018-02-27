@@ -30,6 +30,7 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="url_rewrite_generate" xsi:type="object">Boraso\Toolkit\Console\Command\UrlRewriteGenerate</item>
+                <item name="save_all_products" xsi:type="object">Boraso\Toolkit\Console\Command\SaveAllProducts</item>
             </argument>
         </arguments>
     </type>
