@@ -156,6 +156,14 @@ class FtpHandler
                                 $this->logger->debug('FTP file: ' . $filename . ' renamed to ' . $newFileName);
                             }
                         }
+                        else {
+                            if ($this->ftpHandler->rm($filename) == false) {
+                                $this->logger->debug('FTP remove: ' . $filename . ' failed!!!');
+                                return false;
+                            } else {
+                                $this->logger->debug('FTP file: ' . $filename . ' removed');
+                            }
+                        }
                     }
                 }
 
