@@ -13,6 +13,7 @@ class Data extends AbstractHelper
 {
     const SETTINGS_DEBUG_ENABLE = 'toolkit_settings/debug/enable';
     const ENABLE_SEND_EMAIL = 'newsletter/subscription/enable_send_email';
+    const HIDE_CATEGORY_DESCRIPTION = 'catalog/category_customization/hide_category_description';
 
     /**
      * @return mixed
@@ -41,6 +42,17 @@ class Data extends AbstractHelper
     {
         return $this->scopeConfig->getValue(
             self::ENABLE_SEND_EMAIL,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHideCategoryDescription()
+    {
+        return $this->scopeConfig->getValue(
+            self::HIDE_CATEGORY_DESCRIPTION,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
     }

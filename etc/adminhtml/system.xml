@@ -33,5 +33,16 @@
                 </field>
             </group>
         </section>
+
+        <section id="catalog">
+            <group id="category_customization" translate="label" type="text" sortOrder="10000" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Category customizations</label>
+                <field id="hide_category_description" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Hide category description</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Hide category description in category listing from second listing page</comment>
+                </field>
+            </group>
+        </section>
     </system>
 </config>
