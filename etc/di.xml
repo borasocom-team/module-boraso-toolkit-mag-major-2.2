@@ -23,6 +23,8 @@
         </arguments>
     </type>
     <preference for="Magento\UrlRewrite\Controller\Router" type="Boraso\Toolkit\Controller\Magento\UrlRewrite\RouterFix" />
+    <preference for="Magento\Framework\View\Asset\PropertyGroup" type="Boraso\Toolkit\Model\Abstracts\Framework\View\Asset\PropertyGroup" />
+    <preference for="Magento\Framework\View\Asset\GroupedCollection" type="Boraso\Toolkit\Model\Abstracts\Framework\View\Asset\GroupedCollection" />
     <type name="Magento\Newsletter\Model\Subscriber">
         <plugin name="subscriberemailplugin" type="Boraso\Toolkit\Plugin\Newsletter\SubscriberPlugin" disabled="false" sortOrder="10"/>
     </type>
@@ -36,7 +38,7 @@
     </type>
 
     <type name="Magento\Framework\View\Page\Config">
-        <plugin name="removeMetaKeywords" type="Boraso\Toolkit\Plugin\PageConfig\RemoveMetaKeywordsPlugin" sortOrder="9999"/>
+        <plugin name="pageconfig" type="Boraso\Toolkit\Plugin\Framework\View\Page\ConfigPlugin" sortOrder="9999"/>
     </type>
 
 </config>
