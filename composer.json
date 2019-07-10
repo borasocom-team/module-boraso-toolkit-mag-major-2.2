@@ -3,10 +3,10 @@
   "description": "Collection of usefull Magento2 utilities",
   "require": {
     "php": "7.0.2|7.0.4|~7.0.6|~7.1.0|~7.2.0",
-    "magento/module-catalog": ">=101 <103"
+    "magento/module-catalog": ">=101 <104"
   },
   "type": "magento2-module",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "license": "GPL-3.0+",
   "autoload": {
     "files": [
