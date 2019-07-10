@@ -2,7 +2,7 @@
   "name": "boraso/module-toolkit",
   "description": "Collection of usefull Magento2 utilities",
   "require": {
-    "php": "7.0.2|7.0.4|~7.0.6|~7.1.0",
+    "php": "7.0.2|7.0.4|~7.0.6|~7.1.0|~7.2.0",
     "magento/module-catalog": ">=101 <103"
   },
   "type": "magento2-module",
